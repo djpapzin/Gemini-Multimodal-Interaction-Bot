@@ -59,6 +59,13 @@ if api_key:
         with st.chat_message(message["role"]):
             st.markdown(message["content"])
 
+    # Function to update suggested questions based on previous interaction
+    def update_suggested_questions(previous_question):
+        new_suggestions = model.generate_content(
+            [f"Based on the previous question '{previous_question}', generate three similar one-sentence questions."]
+        ).text.split('\n')
+        st.session_state.suggested_questions = new_suggestions
+
     # Show suggested questions if image is uploaded
     if uploaded_file and "suggested_questions" in st.session_state:
         st.title("Suggested Questions")
@@ -67,6 +74,7 @@ if api_key:
             if question.strip():
                 if st.button(f"➡ {question.strip()}", key=question.strip()):
                     st.session_state.prompt = question.strip()
+                    update_suggested_questions(question.strip())
                     print(f"Suggested question clicked: {question.strip()}")
 
     # User input area at the bottom
@@ -89,13 +97,14 @@ if api_key:
         with st.spinner("Generating response..."):
             # Generate response
             response = model.generate_content(inputs)
+            response_text = response.text.split('\n', 1)[-1].strip()  # Remove any numbering
             # Display assistant response in chat message container
             with chat_placeholder:
                 with st.chat_message("assistant"):
-                    st.markdown(response.text)
+                    st.markdown(response_text)
 
             # Add assistant message to chat history
-            st.session_state.messages.append({"role": "assistant", "content": response.text})
+            st.session_state.messages.append({"role": "assistant", "content": response_text})
             st.session_state.prompt = None
             print("Response generated and added to chat history")
     
