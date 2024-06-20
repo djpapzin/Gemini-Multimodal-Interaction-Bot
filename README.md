@@ -2,6 +2,11 @@
 
 This project is a Streamlit web application that uses Google's Gemini Flash model to create a multimodal interaction bot. Users can input text and upload images, and the bot generates responses based on the provided inputs.
 
+[Try it out here](https://gemini-multimodal-interaction-bot.streamlit.app/)
+
+
+![Screenshot](screenshot.jpeg)
+
 ## Features
 
 - Accepts text input from the user
@@ -48,17 +53,6 @@ This project is a Streamlit web application that uses Google's Gemini Flash mode
 2. Open your web browser and go to the URL provided by Streamlit (usually `http://localhost:8501`).
 
 3. Enter your Google API key, input text, and/or upload images to interact with the chatbot.
-
-## Deploying on Streamlit Cloud
-
-When deploying on Streamlit Cloud, make sure to add your Google API key to Streamlit secrets:
-
-1. Go to your Streamlit Cloud dashboard and select your app.
-
-2. Go to the **Secrets** tab and add your secret:
-    ```
-    GOOGLE_API_KEY=your_google_api_key_here
-    ```
 
 ## License
 
